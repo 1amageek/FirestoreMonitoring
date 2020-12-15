@@ -1,4 +1,4 @@
-import Firebase
+import FirebaseFirestore
 
 public class Monitoring {
 

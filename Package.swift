@@ -5,23 +5,28 @@ import PackageDescription
 
 let package = Package(
     name: "FirestoreMonitoring",
+    platforms: [.iOS(.v10), .macOS(.v10_12)],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "FirestoreMonitoring",
             targets: ["FirestoreMonitoring"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "7.1.0"),
+        .package(name: "Firebase", url: "git@github.com:firebase/firebase-ios-sdk.git", .branch("master"))
+//        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "7.1.0")
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "FirestoreMonitoring",
-            dependencies: []),
+            dependencies: [
+                .product(name: "FirebaseFirestore", package: "Firebase")
+            ]),
         .testTarget(
             name: "FirestoreMonitoringTests",
-            dependencies: ["FirestoreMonitoring"]),
+            dependencies: [
+                "FirestoreMonitoring",
+                .product(name: "FirebaseFirestore",
+                         package: "Firebase")
+            ]),
     ]
 )
